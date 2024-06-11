@@ -34,8 +34,8 @@ public class LoginSteps {
     }
     @When("user enters valid credentials")
     public void user_enters_valid_credentials() {
-        loginPage.setUsername("");
-        loginPage.setPassword("");
+        loginPage.setUsername("kelompokrekmed");
+        loginPage.setPassword("kelompokrekmed123");
         resultPage =  loginPage.clickSubmit();
     }
     @Then("the user should be redirected to the beranda page")
