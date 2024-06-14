@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,19 +18,24 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SignUpSteps {
-    WebDriver driver2;
+    WebDriver driver;
     SignUpPage signUpPage;
     ResultPage resultPage;
-    public void setup() {
-        driver2 = new ChromeDriver();
-        this.driver2.manage().window().maximize();
+
+    @Before
+    public void setup(){
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
-    public void cleanup() { driver2.quit(); }
+
+    @After
+    public void teardown(){
+        driver.quit();
+    }
     @Given("the user is on the sign up page")
     public void the_user_is_on_the_sign_up_page() {
-        setup();
-        this.driver2.get("https://old-app.rekmed.com/site/signup");
-        signUpPage = new SignUpPage(driver2);
+        driver.get("https://old-app.rekmed.com/site/signup");
+        signUpPage = new SignUpPage(driver);
     }
     @When("user enters valid register credentials")
     public void user_enters_valid_register_credentials() {
@@ -41,12 +48,11 @@ public class SignUpSteps {
     }
     @Then("the user should be redirected to the beranda page2")
     public void the_user_should_be_redirected_to_the_beranda_page2() {
-        WebDriverWait wait = new WebDriverWait(driver2, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/site/index"));
         assertAll(
                 () -> assertEquals("Rekam Medis", resultPage.getWebTitle()),
                 () -> assertEquals("https://old-app.rekmed.com/site/index", resultPage.getCurrentUrl())
         );
-        cleanup();
     }
 }

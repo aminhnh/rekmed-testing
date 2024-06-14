@@ -1,12 +1,13 @@
 package stepDefinitions;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.example.PatientRegistration;
 import org.example.ResultPage;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,24 +19,20 @@ import java.time.Duration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PatientRegistrationSteps {
-
     WebDriver driver;
+
     PatientRegistration patient;
 
     @Before
-    public void setup() {
-        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
-        this.driver = new ChromeDriver();
-        this.driver.manage().window().maximize();
+    public void setup(){
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    public void teardown(){
+        driver.quit();
     }
 
     @Given("the user is on the patient registration page")
@@ -46,6 +43,7 @@ public class PatientRegistrationSteps {
 
     @When("the user enters valid patient information")
     public void the_user_enters_valid_patient_information() {
+        patient.clickPasienBaruButton();
         patient.setNoRekamMedis("12345");
         patient.setNama("John Doe");
         patient.setNoNik("7187654321");
@@ -60,7 +58,7 @@ public class PatientRegistrationSteps {
         patient.setImage("/path/to/image.jpg");
     }
 
-    @When("the user clicks the {string} button")
+    @And("the user clicks the {string} button")
     public void the_user_clicks_the_button(String button) {
         if (button.equalsIgnoreCase("simpanTambahButton")) {
             patient.clickSubmit();

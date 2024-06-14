@@ -5,7 +5,8 @@ import org.openqa.selenium.WebDriver;
 
 public class PatientRegistration {
     private WebDriver driver;
-    By noRekamMedis = By.id("inputgroup-no_nik");
+    By tambahPasienButton = By.xpath("/html/body/div[3]/div[2]/div/div/div/div/div[2]/div/p/button[2]");
+    By noRekamMedis = By.id("pasien-mr");
     By nama = By.id("formgroup-nama");
     By noNik = By.id("formgroup-no_nik");
     By tanggaLahir = By.id("formgroup-tanggal_lahir");
@@ -21,6 +22,9 @@ public class PatientRegistration {
 
     public PatientRegistration(WebDriver driver) {
         this.driver = driver;
+    }
+    public void clickPasienBaruButton(){
+        driver.findElement(tambahPasienButton).click();
     }
     public void setNoRekamMedis(String noRekamMedisInput) {
         driver.findElement(noRekamMedis).sendKeys(noRekamMedisInput);

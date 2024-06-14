@@ -1,5 +1,8 @@
 package stepDefinitions;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,16 +22,17 @@ public class LoginSteps {
     WebDriver driver;
     LoginPage loginPage;
     ResultPage resultPage;
+    @Before
     public void setup() {
         driver = new ChromeDriver();
         this.driver.manage().window().maximize();
     }
+    @After
     public void cleanup() {
         driver.quit();
     }
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
-        setup();
         this.driver.get("https://old-app.rekmed.com/site/login");
         loginPage = new LoginPage(driver);
     }
@@ -46,6 +50,5 @@ public class LoginSteps {
                 () -> assertEquals("Rekam Medis", resultPage.getWebTitle()),
                 () -> assertEquals("https://old-app.rekmed.com/", resultPage.getCurrentUrl())
         );
-        cleanup();
     }
 }
