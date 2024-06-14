@@ -48,7 +48,7 @@ public class PatientRegistrationSteps {
     public void the_user_enters_valid_patient_information() {
         patient.setNoRekamMedis("12345");
         patient.setNama("John Doe");
-        patient.setNoNik("987654321");
+        patient.setNoNik("7187654321");
         patient.setTanggaLahir("01-01-1990");
         patient.setJenisKelamin("Male");
         patient.setAlamat("123 Main St");
