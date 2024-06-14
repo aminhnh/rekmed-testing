@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class PatientRegistration {
     private WebDriver driver;
-    By noRekamMedis=By.id("inputgroup-no_nik");
+    By noRekamMedis = By.id("inputgroup-no_nik");
     By nama = By.id("formgroup-nama");
     By noNik = By.id("formgroup-no_nik");
     By tanggaLahir = By.id("formgroup-tanggal_lahir");
