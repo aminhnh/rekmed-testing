@@ -1,8 +1,9 @@
 Feature: Patient Medical Record
   Background:
     Given the user is logged in
+    And the user has added a patient to the queue
   Scenario: Saving patient examination and check-up data
-    Given the user is on the pemeriksaan page
+    Given the user is on the pengecekan page
     When the user enters check-up data
     And the user saves the check-up data
     And the user enters examination data

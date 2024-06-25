@@ -23,9 +23,16 @@ public class MedicalRecordSteps {
     PemeriksaanPage pemeriksaanPage;
     DataRekamMedisPage dataRekamMedisPage;
     Faker faker = new Faker();
-
-    @Given("the user is on the pemeriksaan page")
-    public void the_user_is_on_the_pemeriksaan_page() {
+    @Given("the user has added a patient to the queue")
+    public void the_user_has_added_a_patient_to_the_queue() {
+        Hooks.getDriver().get("https://old-app.rekmed.com/kunjungan/index");
+        kunjunganPage = new KunjunganPage(Hooks.getDriver());
+        kunjunganPage.clickAddPasienLama();
+        kunjunganPage.setSearchPasienLama("Rikki");
+        kunjunganPage.clickFirstPilihButton();
+    }
+    @Given("the user is on the pengecekan page")
+    public void the_user_is_on_the_pengecekan_page() {
         Hooks.getDriver().get("https://old-app.rekmed.com/kunjungan/index");
         kunjunganPage = new KunjunganPage(Hooks.getDriver());
         kunjunganPage.clickProcessButton();
