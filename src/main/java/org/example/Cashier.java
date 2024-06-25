@@ -18,13 +18,10 @@ public class Cashier {
         this.faker = new Faker();
     }
 
-    private By farmasiMenuFullXPath = By.xpath("/html/body/div[3]/div[1]/div/ul/li[4]");
-    private By resepButtonFullXPath = By.xpath("/html/body/div[3]/div[2]/div/div/div/div/div[2]/div/div[2]/div/table/tbody/tr[1]/td[5]/button");
-    private By tambahResepButtonFullXPath = By.xpath("/html/body/div[3]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[2]/div/div[3]/div[2]/div/form/div[3]/div[2]/button[2]");
-    private By medicationNameField = By.name("Obat[nama][resep][]");
-    private By medicationAmountField = By.name("Obat[jumlah][resep][]");
-    private By medicationSignaField = By.name("Obat[signa][resep][]");
-    private By selesaiButtonFullXPath = By.xpath("/html/body/div[3]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[2]/div/div[3]/div[2]/div/form/button[2]");
+    private By kasirMenuFullXPath = By.xpath("/html/body/div[3]/div[1]/div/ul/li[5]");
+    private By bayarButtonSelector = By.cssSelector("#w0 > table > tbody > tr:nth-child(1) > td:nth-child(5) > button");
+    private By paymentFormFieldFullXPath = By.xpath("//*[@id='bayar-bayar']");
+    private By bayarFormButtonSelector = By.cssSelector("#form-bayar > div.form-group > button");
 
     private WebElement waitForElement(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -36,25 +33,20 @@ public class Cashier {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
-    public void clickFarmasiMenu() {
-        clickElement(farmasiMenuFullXPath);
+    public void clickKasirMenu() {
+        clickElement(kasirMenuFullXPath);
     }
 
-    public void clickResepButton() {
-        clickElement(resepButtonFullXPath);
+    public void clickBayarButton() {
+        clickElement(bayarButtonSelector);
     }
 
-    public void clickTambahResepButton() {
-        clickElement(tambahResepButtonFullXPath);
+    public void fillPaymentForm() {
+        WebElement paymentField = waitForElement(paymentFormFieldFullXPath);
+        paymentField.sendKeys("100000");  // Use dummy data
     }
 
-    public void fillMedicationData() {
-        driver.findElement(medicationNameField).sendKeys(faker.medical().medicineName());
-        driver.findElement(medicationAmountField).sendKeys(String.valueOf(faker.number().numberBetween(1, 10)));
-        driver.findElement(medicationSignaField).sendKeys(faker.lorem().sentence());
-    }
-
-    public void clickSelesaiButton() {
-        clickElement(selesaiButtonFullXPath);
+    public void clickBayarFormButton() {
+        clickElement(bayarFormButtonSelector);
     }
 }
