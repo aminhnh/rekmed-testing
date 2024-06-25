@@ -1,15 +1,11 @@
 package stepDefinitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.example.LoginPage;
+import org.example.LogoutPage;
 import org.example.ResultPage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,27 +14,35 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoginSteps {
+public class LogoutSteps {
     LoginPage loginPage;
     ResultPage resultPage;
-    @Given("the user is on the login page")
-    public void the_user_is_on_the_login_page() {
+    LogoutPage logoutPage;
+
+    @Given("the user is logged in")
+    public void the_user_is_logged_in() {
         Hooks.getDriver().get("https://old-app.rekmed.com/site/login");
         loginPage = new LoginPage(Hooks.getDriver());
-    }
-    @When("user enters valid credentials")
-    public void user_enters_valid_credentials() {
         loginPage.setUsername("kelrekmed");
         loginPage.setPassword("kelrekmed123");
-        resultPage =  loginPage.clickSubmit();
-    }
-    @Then("the user should be redirected to the beranda page")
-    public void the_user_should_be_redirected_to_the_beranda_page() {
+        resultPage = loginPage.clickSubmit();
         WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/"));
+    }
+
+    @When("the user clicks on {string} button")
+    public void the_user_clicks_on_button(String button) {
+        logoutPage = new LogoutPage(Hooks.getDriver());
+        logoutPage.clickLogout();
+    }
+
+    @Then("the system successfully displays the login page")
+    public void the_system_successfully_displays_the_login_page() {
+        WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/site/login"));
+        assertEquals("https://old-app.rekmed.com/site/login", Hooks.getDriver().getCurrentUrl());
         assertAll(
-                () -> assertEquals("Rekam Medis", resultPage.getWebTitle()),
-                () -> assertEquals("https://old-app.rekmed.com/", resultPage.getCurrentUrl())
+                () -> assertEquals(true, logoutPage.isLoginPageDisplayed())
         );
     }
 }
