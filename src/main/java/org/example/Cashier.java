@@ -5,17 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.github.javafaker.Faker;
 
 import java.time.Duration;
 
 public class Cashier {
     private WebDriver driver;
-    private Faker faker;
 
     public Cashier(WebDriver driver) {
         this.driver = driver;
-        this.faker = new Faker();
     }
 
     private By kasirMenuFullXPath = By.xpath("/html/body/div[3]/div[1]/div/ul/li[5]");
@@ -30,7 +27,12 @@ public class Cashier {
 
     private void clickElement(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        if (element != null) {
+            element.click();
+        } else {
+            throw new IllegalArgumentException("Element not found: " + locator.toString());
+        }
     }
 
     public void clickKasirMenu() {

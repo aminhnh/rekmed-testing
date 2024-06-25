@@ -9,7 +9,7 @@ public class ExtentReportManager {
 
     public static ExtentReports getInstance() {
         if (extent == null) {
-            String reportPath = "E:/Kuliah/ExtentReport.html";
+            String reportPath = "E:/Kuliah/Semester 4/ExtentReport.html";
             sparkReporter = new ExtentSparkReporter(reportPath);
             sparkReporter.config().setDocumentTitle("Automation Test Report");
             sparkReporter.config().setReportName("Automation Test Results");

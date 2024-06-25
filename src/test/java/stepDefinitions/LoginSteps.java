@@ -11,7 +11,6 @@ import io.cucumber.java.en.When;
 import org.example.LoginPage;
 import org.example.ResultPage;
 import org.example.ExtentReportManager;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,31 +32,35 @@ public class LoginSteps {
 
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
-        test = extent.createTest("the user is on the login page");
+        test = extent.createTest("Test LoginSteps");
+        test.log(Status.INFO, "Navigating to login page");
         Hooks.getDriver().get("https://old-app.rekmed.com/site/login");
         loginPage = new LoginPage(Hooks.getDriver());
-        test.log(Status.PASS, "Navigated to login page");
+        test.log(Status.PASS, "Navigated to login page successfully");
     }
 
     @When("user enters valid credentials")
     public void user_enters_valid_credentials() {
-        test = extent.createTest("user enters valid credentials");
+        test = extent.createTest("Test LoginSteps: User enters valid credentials");
+        test.log(Status.INFO, "Entering valid credentials");
         loginPage.setUsername("aminhnh");
         loginPage.setPassword("rekmed123");
         resultPage = loginPage.clickSubmit();
-        test.log(Status.PASS, "Entered valid credentials");
+        test.log(Status.PASS, "Entered valid credentials successfully");
     }
 
     @Then("the user should be redirected to the beranda page")
     public void the_user_should_be_redirected_to_the_beranda_page() {
-        test = extent.createTest("the user should be redirected to the beranda page");
+        test = extent.createTest("Test LoginSteps: User is redirected to the beranda page");
+        test.log(Status.INFO, "Waiting for redirection to the beranda page");
         WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/"));
         assertAll(
-                () -> assertEquals("Rekam Medis", resultPage.getWebTitle()),
-                () -> assertEquals("https://old-app.rekmed.com/", resultPage.getCurrentUrl())
+                () -> assertEquals("Rekam Medis", resultPage.getWebTitle(), "Title check failed"),
+                () -> assertEquals("https://old-app.rekmed.com/", resultPage.getCurrentUrl(), "URL check failed")
         );
-        test.log(Status.PASS, "User redirected to beranda page");
+        test.log(Status.PASS, "User redirected to beranda page successfully");
+        test.log(Status.INFO, "Login process completed");
     }
 
     @After
@@ -65,6 +68,9 @@ public class LoginSteps {
         if (Hooks.getDriver() != null) {
             Hooks.getDriver().quit();
         }
-        extent.flush();
+        if (test != null) {
+            test.log(Status.PASS, "Browser closed");
+            extent.flush();
+        }
     }
 }

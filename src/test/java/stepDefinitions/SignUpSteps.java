@@ -34,15 +34,15 @@ public class SignUpSteps {
 
     @Given("the user is on the sign up page")
     public void the_user_is_on_the_sign_up_page() {
-        test = extent.createTest("the user is on the sign up page");
+        test = extent.createTest("Test SignUpSteps");
         Hooks.getDriver().get("https://old-app.rekmed.com/site/signup");
         signUpPage = new SignUpPage(Hooks.getDriver());
-        test.log(Status.PASS, "Navigated to sign up page");
+        test.log(Status.INFO, "Navigated to sign up page");
     }
 
     @When("user enters valid register credentials")
     public void user_enters_valid_register_credentials() {
-        test = extent.createTest("user enters valid register credentials");
+        test = extent.createTest("Test SignUpSteps: User enters valid register credentials");
         String username = faker.name().username();
         String email = faker.internet().emailAddress();
         String password = "kelrekmed123";
@@ -53,19 +53,19 @@ public class SignUpSteps {
         signUpPage.setPassword2(password);
         signUpPage.clickCheckbox();
         resultPage = signUpPage.clickSubmit();
-        test.log(Status.PASS, "Entered valid register credentials");
+        test.log(Status.INFO, "Entered valid register credentials");
     }
 
     @Then("the user should be redirected to the beranda page2")
     public void the_user_should_be_redirected_to_the_beranda_page2() {
-        test = extent.createTest("the user should be redirected to the beranda page2");
+        test = extent.createTest("Test SignUpSteps: Verify User is Redirected to Beranda Page");
         WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/site/index"));
         assertAll(
                 () -> assertEquals("Rekam Medis", resultPage.getWebTitle()),
                 () -> assertEquals("https://old-app.rekmed.com/site/index", resultPage.getCurrentUrl())
         );
-        test.log(Status.PASS, "User redirected to beranda page2");
+        test.log(Status.INFO, "User redirected to beranda page2");
     }
 
     @After
@@ -73,6 +73,9 @@ public class SignUpSteps {
         if (Hooks.getDriver() != null) {
             Hooks.getDriver().quit();
         }
-        extent.flush();
+        if (test != null) {
+            test.log(Status.PASS, "Browser closed");
+            extent.flush();
+        }
     }
 }

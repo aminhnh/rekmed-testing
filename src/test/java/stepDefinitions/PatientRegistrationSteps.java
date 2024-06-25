@@ -37,7 +37,7 @@ public class PatientRegistrationSteps {
 
     @Given("the user is on the patient registration page")
     public void the_user_is_on_the_patient_registration_page() {
-        test = extent.createTest("the user is on the patient registration page");
+        test = extent.createTest("Test PatientRegistrationSteps");
         Hooks.getDriver().get("https://old-app.rekmed.com/kunjungan/index");
         patient = new PatientRegistration(Hooks.getDriver());
         test.log(Status.PASS, "Navigated to patient registration page");
@@ -45,7 +45,7 @@ public class PatientRegistrationSteps {
 
     @When("the user enters valid patient information")
     public void the_user_enters_valid_patient_information() throws InterruptedException {
-        test = extent.createTest("the user enters valid patient information");
+        test = extent.createTest("Test PatientRegistrationSteps: Enter Valid Patient Information");
         patient.clickPasienBaruButton();
 
         WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
@@ -84,7 +84,7 @@ public class PatientRegistrationSteps {
 
     @And("the user clicks the {string} button")
     public void the_user_clicks_the_button(String button) throws InterruptedException {
-        test = extent.createTest("the user clicks the " + button + " button");
+        test = extent.createTest("Click " + button + " Button");
         WebElement submitButton = Hooks.getDriver().findElement(By.cssSelector("#form-pasien > div:nth-child(14) > input.btn.btn-success"));
         submitButton.click();
         Thread.sleep(3000);
@@ -93,7 +93,7 @@ public class PatientRegistrationSteps {
 
     @Then("the user should see a confirmation message")
     public void the_user_should_see_a_confirmation_message() {
-        test = extent.createTest("the user should see a confirmation message");
+        test = extent.createTest("Test PatientRegistrationSteps: Verify Confirmation Message");
         WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/pasien/index"));
 
@@ -112,6 +112,9 @@ public class PatientRegistrationSteps {
         if (Hooks.getDriver() != null) {
             Hooks.getDriver().quit();
         }
-        extent.flush();
+        if (test != null) {
+            test.log(Status.PASS, "Browser closed");
+            extent.flush();
+        }
     }
 }
