@@ -23,8 +23,8 @@ public class LogoutSteps {
     public void the_user_is_logged_in() {
         Hooks.getDriver().get("https://old-app.rekmed.com/site/login");
         loginPage = new LoginPage(Hooks.getDriver());
-        loginPage.setUsername("kelrekmed");
-        loginPage.setPassword("kelrekmed123");
+        loginPage.setUsername("aminhnh");
+        loginPage.setPassword("rekmed123");
         resultPage = loginPage.clickSubmit();
         WebDriverWait wait = new WebDriverWait(Hooks.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://old-app.rekmed.com/"));
