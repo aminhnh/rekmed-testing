@@ -38,9 +38,11 @@ public class PengecekanPage {
         driver.findElement(suhuField).sendKeys(suhu);
     }
     public void setBeratBadan(String beratBadan) {
+        driver.findElement(beratBadanField).clear();
         driver.findElement(beratBadanField).sendKeys(beratBadan);
     }
     public void setTinggiBadan(String tinggiBadan) {
+        driver.findElement(tinggiBadanField).clear();
         driver.findElement(tinggiBadanField).sendKeys(tinggiBadan);
     }
 
